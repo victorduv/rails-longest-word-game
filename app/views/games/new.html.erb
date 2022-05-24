@@ -1,0 +1,24 @@
+<div class="container text-center w-70%">
+  <h1>New game</h1>
+  <ul class="letter-box d-flex justify-content-between flex-wrap">
+    <% @grid.each do |letter| %>
+      <li><%= letter %></li>
+    <% end %>
+  </ul>
+  <form action="/score" method="post" class="d-flex">
+    <label for="word" class="form-label">What's the longest word you can find</label>
+    <input type="text" name="word" class="form-control">
+    <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+    <%= hidden_field_tag 'grid', @grid %>
+    <%= hidden_field_tag 'time', Time.now %>
+
+    <input type="submit" value="Play!" class="btn btn-primary" >
+  </form>
+  <% if @word.present? %>
+    <h1>Result</h1>
+      <p>your word: <%= @word %></p>
+      <p>time elapsed: <%= @time %></p>
+      <p>score: <%= @score %></p>
+    <%= link_to "play again", "/new" %>
+  <% end %>
+</div>
